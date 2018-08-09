@@ -4,6 +4,7 @@ import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
+
 // @material-ui/icons
 
 // core components
@@ -15,16 +16,29 @@ import Button from "components/CustomButtons/Button.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
+
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
 
 // Sections for this page
 import ProductSection from "./Sections/ProductSection.jsx";
 import TeamSection from "./Sections/TeamSection.jsx";
-import WorkSection from "./Sections/WorkSection.jsx";
 
 const dashboardRoutes = [];
 
 class LandingPage extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      
+    }
+    this.onClick = this.onClick.bind(this)
+  }
+
+  onClick() {
+    this.props.history.push("/profile-page");
+    console.log("clicked")
+  }
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -32,7 +46,7 @@ class LandingPage extends React.Component {
         <Header
           color="transparent"
           routes={dashboardRoutes}
-          brand="Material Kit React"
+          brand="Wayfaring Stranger"
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
@@ -45,23 +59,11 @@ class LandingPage extends React.Component {
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
-                <h1 className={classes.title}>Your Story Starts With Us.</h1>
+                <h1 className={classes.title}>Take your first steps.</h1>
                 <h4>
-                  Every landing page needs a small description after the big
-                  bold title, that's why we added this text here. Add here all
-                  the information that can make you or your product create the
-                  first impression.
+                  Don't let your adventures become another fleeting moment lost in the sea of your mind
                 </h4>
                 <br />
-                <Button
-                  color="danger"
-                  size="lg"
-                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fas fa-play" />Watch video
-                </Button>
               </GridItem>
             </GridContainer>
           </div>
@@ -69,8 +71,16 @@ class LandingPage extends React.Component {
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classes.container}>
             <ProductSection />
+            <GridContainer justify="center">
+              <GridItem xs={12} sm={12} md={6} justify="center" >
+                <Button color="primary" round block
+                  onClick={this.onClick}>
+                  Click to start your journey
+                </Button>
+              </GridItem>
+            </ GridContainer>
+
             <TeamSection />
-            <WorkSection />
           </div>
         </div>
         <Footer />

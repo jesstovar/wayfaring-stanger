@@ -1,12 +1,14 @@
 import React from "react";
+//import { Modal} from 'react-bootstrap';
+
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
 import Camera from "@material-ui/icons/Camera";
-import Palette from "@material-ui/icons/Palette";
 import Favorite from "@material-ui/icons/Favorite";
+
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -18,21 +20,54 @@ import NavPills from "components/NavPills/NavPills.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
 import profile from "assets/img/faces/christian.jpg";
-
-import studio1 from "assets/img/examples/studio-1.jpg";
-import studio2 from "assets/img/examples/studio-2.jpg";
-import studio3 from "assets/img/examples/studio-3.jpg";
-import studio4 from "assets/img/examples/studio-4.jpg";
-import studio5 from "assets/img/examples/studio-5.jpg";
-import work1 from "assets/img/examples/olu-eletu.jpg";
-import work2 from "assets/img/examples/clem-onojeghuo.jpg";
-import work3 from "assets/img/examples/cynthia-del-rio.jpg";
-import work4 from "assets/img/examples/mariya-georgieva.jpg";
-import work5 from "assets/img/examples/clem-onojegaw.jpg";
-
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
 
 class ProfilePage extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: []
+      , formData: {
+        name: ''
+        , location: ''
+        , miles: ''
+        , imageUrl: ''
+      }
+      , editMode: false
+
+    }
+    this.inputOnChangeHandler = this.inputOnChangeHandler.bind(this)
+    this.onSave = this.onSave.bind(this)
+    this.editEntry = this.editEntry.bind(this)
+  }
+
+  inputOnChangeHandler(event) {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+
+    this.setState(prevState => {
+      const newFormData = { ...prevState.formData, [name]: value };
+      return { formData: newFormData };
+    });
+  }
+
+  onSave(event) {
+    const oldState = { ...this.state.formData };
+    this.setState({
+      data: this.state.data.concat([oldState])
+    })
+    
+  }
+
+  editEntry(event) {
+    this.setState({
+      editMode: true
+    })
+    console.log("edit was clicked")
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     const imageClasses = classNames(
@@ -41,11 +76,29 @@ class ProfilePage extends React.Component {
       classes.imgFluid
     );
     const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
+
+    const list = this.state.data ? (
+      this.state.data.map((item, i) => (
+        <GridItem xs={12} sm={12} md={4} key={[i]}>
+          <i className={"fab fa fa-edit"} onClick={this.editEntry} />
+          <p>Trail Name:  {item.name}</p>
+          <p>Trail Location:  {item.location}</p>
+          <p>Miles Traveled: {item.miles}</p>
+          <img
+            alt="..."
+            src={item.imageUrl}
+            className={navImageClasses}
+          />
+        </GridItem>
+      ))
+    ) : (
+        <React.Fragment />
+      );
     return (
       <div>
         <Header
           color="transparent"
-          brand="Material Kit React"
+          brand="Wayfaring Stranger"
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
@@ -65,8 +118,8 @@ class ProfilePage extends React.Component {
                       <img src={profile} alt="..." className={imageClasses} />
                     </div>
                     <div className={classes.name}>
-                      <h3 className={classes.title}>Christian Louboutin</h3>
-                      <h6>DESIGNER</h6>
+                      <h3 className={classes.title}>Lon Milk</h3>
+                      <h6>Adventurer</h6>
                       <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-twitter"} />
                       </Button>
@@ -88,6 +141,7 @@ class ProfilePage extends React.Component {
                   intimate feel with a solid groove structure.{" "}
                 </p>
               </div>
+
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
                   <NavPills
@@ -95,108 +149,151 @@ class ProfilePage extends React.Component {
                     color="primary"
                     tabs={[
                       {
-                        tabButton: "Studio",
+                        tabButton: "Add Destination",
                         tabIcon: Camera,
                         tabContent: (
-                          <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={studio1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio2}
-                                className={navImageClasses}
+                          <GridContainer>
+                            <GridItem xs={12} sm={12} md={6}>
+                              <form>
+                                <div className="form-group">
+                                  <label
+                                    className="col-sm-3 control-label"
+                                    htmlFor="name"
+                                    id="nameLabel"
+                                  >
+                                    Trail Name&nbsp;&nbsp;
+                        </label>
+                                  <input
+                                    label="Trail Name"
+                                    id="float"
+                                    name="name"
+                                    type="text"
+                                    value={this.state.name}
+                                    onChange={this.inputOnChangeHandler}
+                                  />
+                                </div>
+                              </form>
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                              <label
+                                className="col-sm-3 control-label"
+                                htmlFor="name"
+                                id="nameLabel"
+                              >
+                                Trail Location&nbsp;&nbsp;
+                        </label>
+                              <input
+                                label="Trail Location"
+                                id="float"
+                                name="location"
+                                type="text"
+                                value={this.state.location}
+                                onChange={this.inputOnChangeHandler}
                               />
                             </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={studio5}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio4}
-                                className={navImageClasses}
+
+                            <GridItem xs={12} sm={12} md={6}>
+                              <label
+                                className="col-sm-3 control-label"
+                                htmlFor="miles"
+                                id="milesLabel"
+                              >
+                                Miles Traveled&nbsp;&nbsp;
+                        </label>
+                              <input
+                                label="Miles Traveled"
+                                id="float"
+                                name="miles"
+                                type="text"
+                                value={this.state.miles}
+                                onChange={this.inputOnChangeHandler}
                               />
                             </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                              <label
+                                className="col-sm-3 control-label"
+                                htmlFor="imageUrl"
+                                id="imageUrlLabel"
+                              >
+                                Image Url&nbsp;&nbsp;
+                        </label>
+                              <input
+                                label="Image Url"
+                                id="float"
+                                name="imageUrl"
+                                type="text"
+                                value={this.state.imageUrl}
+                                onChange={this.inputOnChangeHandler}
+                              />
+                            </GridItem>
+
+                            {/*  <GridItem xs={12} sm={12} md={6}>
+                              <CustomInput
+                                labelText="Trail Name"
+                                id="float"
+                                name="name"
+                                type="text"
+                                value={this.state.name}
+                                onChange={this.inputOnChangeHandler}
+                                formControlProps={{
+                                  fullWidth: true
+                                }}
+                              />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                              <CustomInput
+                                labelText="Trail Location"
+                                id="float"
+                                name="location"
+                                type="text"
+                                value={this.state.location}
+                                onChange={this.inputOnChangeHandler}
+                                formControlProps={{
+                                  fullWidth: true
+                                }}
+                              />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                              <CustomInput
+                                labelText="Miles Traveled"
+                                id="float"
+                                type="text"
+                                name="miles"
+                                value={this.state.miles}
+                                onChange={this.inputOnChangeHandler}
+                                formControlProps={{
+                                  fullWidth: true
+                                }}
+                              />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                              <CustomInput
+                                labelText="Will you return"
+                                id="float"
+                                name="return"
+                                type="text"
+                                value={this.state.return}
+                                onChange={this.inputOnChangeHandler}
+                                formControlProps={{
+                                  fullWidth: true
+                                }}
+                              />
+                            </GridItem> */}
+                            <div style={{ "margin": "auto", "padding": "50px" }}>
+                              <Button color="primary" round
+                                onClick={(event) => this.onSave(event)}>
+                                Click to archive your journey
+                              </Button>
+                            </div>
                           </GridContainer>
                         )
                       },
                       {
-                        tabButton: "Work",
-                        tabIcon: Palette,
-                        tabContent: (
-                          <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work2}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work3}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work4}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work5}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        )
-                      },
-                      {
-                        tabButton: "Favorite",
+                        tabButton: "Your Destinations",
                         tabIcon: Favorite,
                         tabContent: (
                           <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work4}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio3}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work2}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio1}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
+                            {list}
                           </GridContainer>
                         )
                       }

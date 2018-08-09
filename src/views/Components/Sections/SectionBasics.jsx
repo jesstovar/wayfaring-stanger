@@ -62,7 +62,7 @@ class SectionBasics extends React.Component {
       <div className={classes.sections}>
         <div className={classes.container}>
           <div className={classes.title}>
-            <h2>Basic Elements</h2>
+            <h2>Cats</h2>
           </div>
           <div id="buttons">
             <div className={classes.title}>
