@@ -34,9 +34,9 @@ class NavPills extends React.Component {
   
   componentWillReceiveProps(futureProps) {
     debugger;
-    if (futureProps.activeIndex && (futureProps.activeIndex !== this.props.active)) {
-      this.setState({
-        active: this.props.activeIndex
+    if (futureProps.activeIndex && (futureProps.activeIndex !== this.props.active)) { //compare future props with current props
+      this.setState({ //prevState
+        active: this.props.activeIndex 
       })
     }
     else {
@@ -45,7 +45,7 @@ class NavPills extends React.Component {
       })
     }
   }
-
+//check props with same props- furture-curretn - value setting should be future props.
   render() {
     const {
       classes,
