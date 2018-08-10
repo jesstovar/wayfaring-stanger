@@ -20,7 +20,8 @@ class NavPills extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: props.active
+      active: props.active,
+      activeIndex: null
     };
   }
   handleChange = (event, active) => {
@@ -29,6 +30,22 @@ class NavPills extends React.Component {
   handleChangeIndex = index => {
     this.setState({ active: index });
   };
+
+  
+  componentWillReceiveProps(futureProps) {
+    debugger;
+    if (futureProps.activeIndex && (futureProps.activeIndex !== this.props.active)) {
+      this.setState({
+        active: this.props.activeIndex
+      })
+    }
+    else {
+      this.setState({
+        active: this.props.active
+      })
+    }
+  }
+
   render() {
     const {
       classes,
@@ -103,11 +120,11 @@ class NavPills extends React.Component {
         <GridItem {...horizontal.contentGrid}>{tabContent}</GridItem>
       </GridContainer>
     ) : (
-      <div>
-        {tabButtons}
-        {tabContent}
-      </div>
-    );
+        <div>
+          {tabButtons}
+          {tabContent}
+        </div>
+      );
   }
 }
 
@@ -124,7 +141,8 @@ NavPills.propTypes = {
     PropTypes.shape({
       tabButton: PropTypes.string,
       tabIcon: PropTypes.func,
-      tabContent: PropTypes.node
+      tabContent: PropTypes.node,
+      tabId: PropTypes.number
     })
   ).isRequired,
   color: PropTypes.oneOf([

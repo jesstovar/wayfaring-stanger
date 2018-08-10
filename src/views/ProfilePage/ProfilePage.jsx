@@ -53,15 +53,21 @@ class ProfilePage extends React.Component {
     });
   }
 
-  onSave(event) {
+  onSave(event, activeIndex) {
+    //check state of id 
+    //debugger;
     const oldState = { ...this.state.formData };
     this.setState({
-      data: this.state.data.concat([oldState])
+      data: this.state.data.concat([oldState]),
+      activeIndex: activeIndex //pass this.state.active index to nav pills via props
     })
-    
+
   }
 
   editEntry(event) {
+    //1 -start editing by populating info inside form on tab1
+    //change tab
+    //2 - item index/id being invisablity set
     this.setState({
       editMode: true
     })
@@ -145,6 +151,7 @@ class ProfilePage extends React.Component {
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
                   <NavPills
+                    activeIndex={this.state.activeIndex}
                     alignCenter
                     color="primary"
                     tabs={[
@@ -226,62 +233,9 @@ class ProfilePage extends React.Component {
                                 onChange={this.inputOnChangeHandler}
                               />
                             </GridItem>
-
-                            {/*  <GridItem xs={12} sm={12} md={6}>
-                              <CustomInput
-                                labelText="Trail Name"
-                                id="float"
-                                name="name"
-                                type="text"
-                                value={this.state.name}
-                                onChange={this.inputOnChangeHandler}
-                                formControlProps={{
-                                  fullWidth: true
-                                }}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={6}>
-                              <CustomInput
-                                labelText="Trail Location"
-                                id="float"
-                                name="location"
-                                type="text"
-                                value={this.state.location}
-                                onChange={this.inputOnChangeHandler}
-                                formControlProps={{
-                                  fullWidth: true
-                                }}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={6}>
-                              <CustomInput
-                                labelText="Miles Traveled"
-                                id="float"
-                                type="text"
-                                name="miles"
-                                value={this.state.miles}
-                                onChange={this.inputOnChangeHandler}
-                                formControlProps={{
-                                  fullWidth: true
-                                }}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={6}>
-                              <CustomInput
-                                labelText="Will you return"
-                                id="float"
-                                name="return"
-                                type="text"
-                                value={this.state.return}
-                                onChange={this.inputOnChangeHandler}
-                                formControlProps={{
-                                  fullWidth: true
-                                }}
-                              />
-                            </GridItem> */}
                             <div style={{ "margin": "auto", "padding": "50px" }}>
                               <Button color="primary" round
-                                onClick={(event) => this.onSave(event)}>
+                                onClick={(event) => this.onSave(event, 1)}>
                                 Click to archive your journey
                               </Button>
                             </div>
