@@ -35,6 +35,8 @@ class ProfilePage extends React.Component {
         , imageUrl: ''
       }
       , editMode: false
+      //, activeIndex: 0
+      , active: 0
 
     }
     this.inputOnChangeHandler = this.inputOnChangeHandler.bind(this)
@@ -53,13 +55,14 @@ class ProfilePage extends React.Component {
     });
   }
 
-  onSave(event, activeIndex) {
+  onSave(event, active) {
     //check state of id 
     //debugger;
     const oldState = { ...this.state.formData };
     this.setState({
-      data: this.state.data.concat([oldState]),
-      activeIndex: activeIndex //pass this.state.active index to nav pills via props
+      data: this.state.data.concat([oldState])
+      //activeIndex: 1//activeIndex //pass this.state.active index to nav pills via props
+      , active: 1
     })
 
   }
@@ -69,7 +72,8 @@ class ProfilePage extends React.Component {
     //change tab
     //2 - item index/id being invisablity set
     this.setState({
-      editMode: true
+      activeIndex: 1
+      , active: 1
     })
     console.log("edit was clicked")
   }
@@ -151,7 +155,7 @@ class ProfilePage extends React.Component {
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
                   <NavPills
-                    activeIndex={this.state.activeIndex}
+                    active={this.state.active}
                     alignCenter
                     color="primary"
                     tabs={[

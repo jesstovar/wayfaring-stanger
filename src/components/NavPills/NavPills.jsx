@@ -21,7 +21,7 @@ class NavPills extends React.Component {
     super(props);
     this.state = {
       active: props.active,
-      activeIndex: null
+      //activeIndex: 0
     };
   }
   handleChange = (event, active) => {
@@ -31,21 +31,21 @@ class NavPills extends React.Component {
     this.setState({ active: index });
   };
 
-  
+
   componentWillReceiveProps(futureProps) {
     debugger;
-    if (futureProps.activeIndex && (futureProps.activeIndex !== this.props.active)) { //compare future props with current props
+    if (futureProps.active && (futureProps.active !== this.state.active)) { //compare future props with current props
       this.setState({ //prevState
-        active: this.props.activeIndex 
+        active: futureProps.active //get rid of active props
       })
     }
     else {
       this.setState({
-        active: this.props.active
+        active: futureProps.active
       })
     }
   }
-//check props with same props- furture-curretn - value setting should be future props.
+  //check props with same props- furture-curretn - value setting should be future props.
   render() {
     const {
       classes,
@@ -142,7 +142,6 @@ NavPills.propTypes = {
       tabButton: PropTypes.string,
       tabIcon: PropTypes.func,
       tabContent: PropTypes.node,
-      tabId: PropTypes.number
     })
   ).isRequired,
   color: PropTypes.oneOf([
