@@ -35,7 +35,6 @@ class ProfilePage extends React.Component {
         , imageUrl: ''
       }
       , editMode: false
-      //, activeIndex: 0
       , active: 0
 
     }
@@ -61,7 +60,6 @@ class ProfilePage extends React.Component {
     const oldState = { ...this.state.formData };
     this.setState({
       data: this.state.data.concat([oldState])
-      //activeIndex: 1//activeIndex //pass this.state.active index to nav pills via props
       , active: 1
     })
 
