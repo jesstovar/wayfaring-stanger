@@ -43,11 +43,13 @@ class ProfilePage extends React.Component {
     this.editEntry = this.editEntry.bind(this)
   }
 
+
   inputOnChangeHandler(event) {
+    //debugger;
     const target = event.target;
     const name = target.name;
     const value = target.value;
-
+    //debugger;
     this.setState(prevState => {
       const newFormData = { ...prevState.formData, [name]: value };
       return { formData: newFormData };
@@ -55,7 +57,6 @@ class ProfilePage extends React.Component {
   }
 
   onSave(event, active) {
-    //check state of id 
     //debugger;
     const oldState = { ...this.state.formData };
     this.setState({
@@ -63,17 +64,31 @@ class ProfilePage extends React.Component {
       , active: 1
     })
 
+/*          if (this.state.active === 1) {
+          this.setState({
+            active: 0
+          })
+        }
+        else {
+          this.setState({
+            active: 1
+          })
+        } 
+ */
   }
 
-  editEntry(event) {
+  editEntry(event, active, prevProps) {
     //1 -start editing by populating info inside form on tab1
     //change tab
     //2 - item index/id being invisablity set
-    this.setState({
-      activeIndex: 1
-      , active: 1
-    })
-    console.log("edit was clicked")
+    //debugger;
+    if (prevProps !== this.props) {
+      this.setState({
+        name: this.props.name,
+        active: 0
+      })
+      console.log("edit was clicked")
+    }
   }
 
   render() {
@@ -88,7 +103,7 @@ class ProfilePage extends React.Component {
     const list = this.state.data ? (
       this.state.data.map((item, i) => (
         <GridItem xs={12} sm={12} md={4} key={[i]}>
-          <i className={"fab fa fa-edit"} onClick={this.editEntry} />
+          <i className={"fab fa fa-edit"} onClick={(event) => this.editEntry(event, 0)} />
           <p>Trail Name:  {item.name}</p>
           <p>Trail Location:  {item.location}</p>
           <p>Miles Traveled: {item.miles}</p>
@@ -177,7 +192,7 @@ class ProfilePage extends React.Component {
                                     id="float"
                                     name="name"
                                     type="text"
-                                    value={this.state.name}
+                                    value={this.state.formData.name}
                                     onChange={this.inputOnChangeHandler}
                                   />
                                 </div>
@@ -196,7 +211,7 @@ class ProfilePage extends React.Component {
                                 id="float"
                                 name="location"
                                 type="text"
-                                value={this.state.location}
+                                value={this.state.formData.location}
                                 onChange={this.inputOnChangeHandler}
                               />
                             </GridItem>
@@ -214,7 +229,7 @@ class ProfilePage extends React.Component {
                                 id="float"
                                 name="miles"
                                 type="text"
-                                value={this.state.miles}
+                                value={this.state.formData.miles}
                                 onChange={this.inputOnChangeHandler}
                               />
                             </GridItem>
@@ -231,7 +246,7 @@ class ProfilePage extends React.Component {
                                 id="float"
                                 name="imageUrl"
                                 type="text"
-                                value={this.state.imageUrl}
+                                value={this.state.formData.imageUrl}
                                 onChange={this.inputOnChangeHandler}
                               />
                             </GridItem>
